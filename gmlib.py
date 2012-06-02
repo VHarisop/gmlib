@@ -62,6 +62,21 @@ class gm_Statistics(object):
 
 	
 
-		
+
+class gmRead(object):
+
+	def __init__(self, input_source=raw_input):
+		self.input_source = input_source
+
+
+	def Ints(self):
+		self.intlist = [int(item) for item in self.input_source().split()]
+		return self.intlist
+
+	def Floats(self):
+		self.floatlist = [float(item) for item in self.input_source().split()]
+		return self.floatlist
+
+	
 
 
