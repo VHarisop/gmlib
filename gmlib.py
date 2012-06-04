@@ -133,22 +133,29 @@ class gm_Statistics(object):
 
 
 
-	
 
-
-class gm_Read(object):
+class gm_Interactive(object):
 
 	def __init__(self, input_source=raw_input):
 		self.input_source = input_source
 
 
-	def Ints(self):
+	def Ints(self): 
 		self.intlist = [int(item) for item in self.input_source().split()]
 		return self.intlist
 
 	def Floats(self):
 		self.floatlist = [float(item) for item in self.input_source().split()]
 		return self.floatlist
+
+	def MakeList(self, *args):
+		return list(args)
+
+	def MakeDict(self, *d_args):
+		return dict(d_args)
+
+	def Evaluate(self, expression):
+		return eval(expression)
 
 	
 class gm_File(object):
