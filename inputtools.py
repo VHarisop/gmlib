@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+__author__ = "Vassilis Harisopulos <https://github.com/VHarisop>"
+__version__ = "0.1"
+
+
+
 #########
 std_input = raw_input
 #########

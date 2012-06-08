@@ -1,5 +1,19 @@
 from itertools import *
 from math import sqrt
+import sys
+
+
+__author__ = "Vassilis Harisopulos <https://github.com/VHarisop>"
+__version__ = "0.1.2"
+
+
+if sys.version_info < (3,0):
+	reload(sys)
+	sys.setdefaultencoding('utf8')
+else:
+	raw_input = input
+
+
 
 
 class gm_Set(object):
@@ -135,6 +149,7 @@ class gm_Statistics(object):
 
 
 class gm_Interactive(object):
+
 
 	def __init__(self, input_source=raw_input):
 		self.input_source = input_source
