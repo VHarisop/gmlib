@@ -3,10 +3,19 @@
 __author__ = "Vassilis Harisopulos <https://github.com/VHarisop>"
 __version__ = "0.1"
 
+import sys
+if sys.version_info < (3, 0):
+	reload(sys)
+	sys.setdefaultencoding('utf8')
+else:
+	raw_input = input
+
 
 
 #########
 std_input = raw_input
+READ_SOURCE = 'console'
+
 #########
 
 
@@ -28,10 +37,17 @@ class InputError(Exception):
 	''' incomplete Exception class similar to ReadError for general input exceptions, such as missing files, etc. '''
 	# TO BE IMPLEMENTED 
 
+	def __init__(self, cause):
+		self.msg = cause
+
+	def message(self):
+		return "INPUT ERROR: {0}".format(self.msg)
+
 
 class Read(object):
 
 	''' custom class for effectively reading numeric types from the standard input '''
+	''' better used when it is not instantiated. for example, to read a line of ints: _ints = Read().ints() '''
 
 
 	def __init__(self):
@@ -79,6 +95,18 @@ class Read(object):
 
 		return self.temp_data
 
+	
+	def nums(self):
+
+		''' reads all 3 kinds of numbers and returns them as a list '''
+		try:
+			self.temp_data = [getnum(x) for x in self.data.split()] #getnum(x) returns either an int, a float, or a complex number
+		except ValueError:
+			print(ReadError("any type").message())
+
+		return self.temp_data
+
+
 
 	def ints_toTuple(self):
 		return tuple(self.ints())
@@ -113,14 +141,29 @@ def redefine_std_input(source, name=None, mode='r'):
 	# INCOMPLETE
 
 	if source == "file":
-		std_input = open(name, mode).readline
+		std_input = open(name, mode).readline	
+		global READ_SOURCE = 'file' #redefine the global, SOURCE variable
 
 	else:
 		std_input = source
 
 
 		
+def getnum(num_string):
 
+
+	''' parses a numeric type from a given string (num_string) '''
+		
+	temp = None
+	try:
+		temp = int(num_string)
+	except:
+		try:
+			temp = float(num_string)
+		except:
+			temp = complex(num_string)
+	
+	return temp
 
 	
 

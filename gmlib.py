@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from itertools import *
 from math import sqrt
 import sys
@@ -202,3 +204,36 @@ class gm_File(object):
 			return results
 
 
+class error(Exception): pass
+
+
+
+class gm_Stack(object):
+
+	def __init__(self, start=[]):
+		self.stack = []
+		for item in start:
+			self.push(item)
+
+	def push(self, obj):
+		self.stack.append(obj)
+
+	def pop(self):
+		if not self.stack: raise error('underflow')
+		return self.stack.pop()
+
+	def top(self):
+		if not self.stack: raise error('underflow')
+		return self.stack[-1]
+
+	def empty(self):
+		return not self.stack
+
+	def __len__(self):
+		return len(self.stack)
+
+	def __getitem__(self, offset):
+		return self.stack[offset]
+
+	def __repr__(self):
+		return '[Stack: %s]' % self.stack
