@@ -37,11 +37,15 @@ class InputError(Exception):
 	''' incomplete Exception class similar to ReadError for general input exceptions, such as missing files, etc. '''
 	# TO BE IMPLEMENTED 
 
-	def __init__(self, cause):
+	def __init__(self, cause, code=0):
 		self.msg = cause
+		self.code = code
 
 	def message(self):
-		return "INPUT ERROR: {0}".format(self.msg)
+		if self.code == 0:
+			return "INPUT ERROR: {0}".format(self.msg)
+		elif self.code == 1: #error code for invalid file input
+			return "INPUT ERROR: {0} {1}".format(self.msg, code)
 
 
 class Read(object):
@@ -56,6 +60,30 @@ class Read(object):
 
 	def __init__(self, data_string):
 		self.data = data_string
+
+	def __init__(self, filename, file_toggle):
+		if file_toggle == 'r':
+			try:
+				fd = file.open(filename, 'r')
+				self.data = fd.readlines()
+				fd.close()
+			except:
+				print InputError("Opening file", 1).message()
+		else:
+			raise InputError("No file", 1)
+
+
+	def file_lines(self, delimiter=' '):
+		''' this function splits each one of the read lines by a given delimiter '''
+
+		return [i.split(delimiter) for i in self.data] #splits every line by a given delimiter
+									 #and puts them all to a list
+
+
+	def line(self, delimiter=' '):
+		''' splits a line according to a delimiter '''
+
+		return [i for i in self.data.split(delimiter)] #returns a list of objects of str-type
 
 	
 	def ints(self):
@@ -131,6 +159,27 @@ class Read(object):
 	def complex_toSet(self):
 		return set(self.complex())
 
+
+class Write(object):
+
+	def __init__(self, data):
+		self.data_to_write = data
+
+	def __init__(self, destination_file, data=None):
+		self.data = data
+		self.target = destination_file
+		self.destination = file.open(self.target, 'w')
+		self.destination.write(data)
+		self.data = None
+
+	def flush_toFile(self, data=None):
+		self.data = data
+		self.destination.write(self.data)
+		self.data = None
+
+	def close_File(self):
+		self.destination.close()
+		
 
 
 
