@@ -36,7 +36,8 @@ class gm_Set(object):
 		
 	def powerset_list(self):
 		'''returns a list with the powerset'''
-		s = list(self.powerset())
+		return list(self.powerset())
+		
 
 	
 	def permutation_list(self, num):

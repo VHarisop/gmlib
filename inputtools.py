@@ -27,6 +27,9 @@ class ReadError(Exception):
 	def message(self):
 		return "ERROR: Not every object is of type {0}".format(self.msg)
 
+	def __str__(self):
+		return self.message()
+
 	
 
 	''' custom Exception class with codes to be defined for Read errors '''
@@ -47,6 +50,9 @@ class InputError(Exception):
 		elif self.code == 1: #error code for invalid file input
 			return "INPUT ERROR: {0} {1}".format(self.msg, code)
 
+
+	def __str__(self):
+		return self.message()
 
 class Read(object):
 
@@ -191,7 +197,7 @@ def redefine_std_input(source, name=None, mode='r'):
 
 	if source == "file":
 		std_input = open(name, mode).readline	
-		global READ_SOURCE = 'file' #redefine the global, SOURCE variable
+		READ_SOURCE = 'file' #redefine the global, SOURCE variable
 
 	else:
 		std_input = source
