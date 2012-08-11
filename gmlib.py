@@ -47,8 +47,14 @@ class gm_Set(object):
 
 	
 	def permutation_list(self, num):
-		'''returns a list with all the set permutations'''
-		s = list(permutations(self.iterable, num))
+		'''returns a list with all the set permutations
+		   if the num argument is bigger than the length of 
+		   the iterable, returns an empty list '''
+		
+		if num <= len(self.iterable):
+			s = list(permutations(self.iterable, num))
+		else:
+			s = []
 		return s
 
 	
@@ -164,13 +170,20 @@ class gm_Interactive(object):
 		self.input_source = input_source
 
 
+	def __eq__(self, other):
+		return (True if self.input_source == other.input_source else False)
+
+	def __neq__(self, other):
+		return (False if self.input_source == other.input_source else True)
+	
+
 	def Ints(self): 
-		self.intlist = [int(item) for item in self.input_source().split()]
-		return self.intlist
+		return [int(item) for item in self.input_source().split()]
+		
 
 	def Floats(self):
-		self.floatlist = [float(item) for item in self.input_source().split()]
-		return self.floatlist
+		return [float(item) for item in self.input_source().split()]
+		
 
 	def MakeList(self, *args):
 		return list(args)
@@ -214,6 +227,18 @@ class gm_File(object):
 		self.filepath = filepath
 		self.datatype = datatype
 
+	
+	
+	def __eq__(self, other):
+		
+		''' two gm_File objects are considered equal if they have the same datapath and datatype '''
+
+		return True if ((self.filepath == other.filepath) and (self.datatype == other.datatype)) else False
+
+	def __neq__(self, other):
+
+		return False if ((self.filepath == other.filepath) and (self.datatype == other.datatype)) else True
+
 
 	def get_stats(self):
 		if self.datatype == "stats":
@@ -247,6 +272,17 @@ class gm_Stack(object):
 		self.stack = []
 		for item in start:
 			self.push(item)
+
+	def __eq__(self, other):
+
+		''' two gm_Stacks are considered equal if the have the same objects in the "stack" field '''
+		
+		return True if self.stack == other.stack else False
+
+
+	def __neq__(self, other):
+		
+		return False if self.stack == other.stack else True
 
 	def push(self, obj):
 		self.stack.append(obj)
