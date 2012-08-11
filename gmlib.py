@@ -26,14 +26,82 @@ class Error(Exception):
 
 class gm_Set(object):
 
+
 	def __init__(self, iterable):
 		self.iterable = iterable
+
 	
+	def __str__(self):
+		return "gm_Set: {0}".format(self.iterable)
+
+	
+	def __repr__(self):
+		
+		return "gm_Set: {0}".format(self.iterable)
+
+
+	def __add__(self, other_set):
+
+		''' This function is equivalent to self UNION other 
+		    It appends the iterable of the 2nd set to that of the first
+		    and then eliminates duplicates '''
+
+		res_list = list(set(self.iterable + other_set.iterable)) #set(_list) eliminates duplicates in a list
+
+		return gm_Set(res_list)
+
+	def __sub__(self, other_set):
+
+		''' This function is equivalent to the EXCLUSION of the 2nd
+		    from the first set. It is implemented by creating a new set
+		    using only the elements of the 1st set that are not in the 2nd'''
+		
+		res_list = []
+		
+		for element in self.iterable:
+			if element not in other_set.iterable:
+				res_list.append(element)
+
+
+		return gm_Set(res_list)
+
+	def Intersection(self, other_set):
+		
+		
+		''' This function is equivalent to the INTERSECTION of
+		    the 1st and 2nd set. '''
+
+		res_list = []
+		for element in self.iterable:
+			if element in other_set.iterable:
+				res_list.append(element)
+
+		return gm_Set(res_list)
+
+	
+	def __eq__(self, other):
+
+		''' Two gm_Sets are considered equal if they
+		    have the same elements as an iterable '''
+
+		return True if self.iterable == other.iterable else False
+
+
+	def __neq__(self, other):
+
+		return True if self.iterable != other.iterable else False
+
+
+	def Union(self, other_set):
+		
+		return self + other_set
+
 
 	def show(self):
 		'''returns the set'''
 		return self.iterable
-	
+
+
 	def powerset(self):
 		'''returns the iterator that supplies the powerset'''
 		s = list(self.iterable)
@@ -58,9 +126,6 @@ class gm_Set(object):
 		return s
 
 	
-	def first(self, times):
-		return list(islice(self.iterable, times))
-
 
 	def nth(self, num, default=None):
 		''' return the n-th element of the set '''
@@ -72,10 +137,12 @@ class gm_Set(object):
 
 			return self.iterable[count]
 		else:
-			return 'Index out of range'
+			raise Error('Index out of range')
 
 	def first(self, n):
+
 		''' return the first n elements of the iterable '''
+
 		return list(islice(self.iterable, n))
 
 
@@ -84,6 +151,8 @@ class gm_Statistics(object):
 	def __init__(self, obs):
 
 		self.obs = obs #stats list
+
+		self.gmfile = None
 
 		self._average = self.average()
 		self._standard_deviation = self.standard_deviation()
@@ -99,6 +168,22 @@ class gm_Statistics(object):
 		self._average = self.average()
 		self._standard_deviation = self.standard_deviation()
 		self._mean_deviation = self.mean_deviation()
+
+
+	def __eq__(self, other):
+		if (self.obs == other.obs) and (self.gmfile == other.gmfile) \
+			and (self._average == other._average) \
+			and (self._standard_deviation == other._standard_deviation) \
+			and (self._mean_deviation == other._mean_deviation):
+				return True
+		else:
+			return False
+
+	def __neq__(self, other):
+		if self == other:
+			return False
+		else:
+			return True
 
 	
 	def average(self):
