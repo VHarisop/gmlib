@@ -16,7 +16,13 @@ else:
 	raw_input = input
 
 
+class Error(Exception):
 
+	def __init__(self, msg):
+		self.msg = msg
+	
+	def __str__(self):
+		return self.msg
 
 class gm_Set(object):
 
@@ -169,11 +175,37 @@ class gm_Interactive(object):
 	def MakeList(self, *args):
 		return list(args)
 
-	def MakeDict(self, *d_args):
+	def MakeDict(self, **d_args):
 		return dict(d_args)
 
 	def Evaluate(self, expression):
 		return eval(expression)
+
+	def MakeDict(self, arg_list, parameter_list):
+
+		''' this function takes an argument and a parameter list
+		    and creates an appropriate dictionary. It raises an error
+		    if there are more parameters than arguments. 
+		    
+		    If there are more arguments than parameters, the exceeding ones
+		    are automatically mapped to None value. '''
+
+
+		tmp = {}
+		diff = len(arg_list) - len(parameter_list)
+		if diff < 0:
+			raise Error("too many parameters")
+		else:
+			while diff > 0:
+				parameter_list.append(None) #if there are any missing values in the parameters
+							    #auto complete the par_list with None's
+
+				diff -= 1
+
+		for count in range(0, len(arg_list)):
+			tmp[arg_list[count]] = parameter_list[count] #map the parameters to the arguments
+
+		return tmp
 
 	
 class gm_File(object):
