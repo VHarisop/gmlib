@@ -6,7 +6,7 @@ import sys
 
 
 __author__ = "Vassilis Harisopulos <https://github.com/VHarisop>"
-__version__ = "0.1.2"
+__version__ = "0.1.9"
 
 
 if sys.version_info < (3,0):
@@ -144,6 +144,16 @@ class gm_Set(object):
 		''' return the first n elements of the iterable '''
 
 		return list(islice(self.iterable, n))
+
+	def product(self):
+
+		''' this function calculates the product of all the set's elements '''
+
+		prod = 1
+		for element in self.iterable:
+			prod *= element
+		return prod
+
 
 
 class gm_Statistics(object):
@@ -391,3 +401,89 @@ class gm_Stack(object):
 
 	def __repr__(self):
 		return '[Stack: %s]' % self.stack
+
+
+class gm_Counting(object):
+
+
+	def __init__(self, elements=[]):
+
+		''' creates a class for counting tasks (discrete math) 
+		    with an optional list of elements '''
+
+		self.elements = elements
+
+	def C(self, n, k):
+
+		''' outputs the choice of k out of n elements '''
+
+		n_list = [i for i in range(1, n+1)]
+		k_list = [i for i in range(1, k+1)]
+		nk_list = [i for i in range(1, n-k+1)]
+
+		common = []
+		for element in n_list:
+			if element in k_list:
+				common.append(element)
+
+		for element in common: #remove common factors between n and k factorials
+			n_list.remove(element)
+			k_list.remove(element)
+
+		common = []
+		for element in n_list:
+			if element in nk_list:
+				common.append(element)
+
+		for element in common: #remove common factors between n and n-k factorials
+			n_list.remove(element)
+			nk_list.remove(element)
+
+		for element in [n_list, k_list, nk_list]:
+			if element == []:
+				element.append(1)
+
+		i = 1
+		for element in n_list:
+			i *= element
+
+		j = 1
+		for element in k_list:
+			j *= element
+
+		m = 1
+		for element in nk_list:
+			m *= element
+
+		return i / (j*m)
+
+	def P(self, n, k):
+
+		''' outputs the number of possible permutations of k out of elements '''
+
+		n_list = [i for i in range(0, n+1)]
+		nk_list = [i for i in range(0, n-k+1)]
+
+		common = []
+		for element in n_list:
+			if element in nk_list:
+				common.append(element)
+
+		for element in common: #remove common factors from the fraction
+			n_list.remove(element); nk_list.remove(element)
+
+		if n_list == []:
+			n_list = [1]
+
+		if nk_list == []:
+			nk_list = [1]
+
+		i = 1
+		for element in n_list:
+			i *= element
+		
+		j = 1
+		for element in nk_list:
+			j *= element
+
+		return i / j
