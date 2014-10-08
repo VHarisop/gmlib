@@ -60,23 +60,20 @@ class Read(object):
 	''' better used when it is not instantiated. for example, to read a line of ints: _ints = Read().ints() '''
 
 
-	def __init__(self):
-		self.data = std_input()
-		self.temp_data = self.data
+	def __init__(self, data_string=None, filename=None, file_toggle='r'):
 
-	def __init__(self, data_string):
-		self.data = data_string
-
-	def __init__(self, filename, file_toggle):
-		if file_toggle == 'r':
-			try:
-				fd = file.open(filename, 'r')
-				self.data = fd.readlines()
-				fd.close()
-			except:
-				print InputError("Opening file", 1).message()
+		if data_string == None:
+				self.data = std_input()
 		else:
-			raise InputError("No file", 1)
+				self.data = data_string
+
+		if filename:
+				try:
+						fd = file.open(filename, file_toggle)
+						self.data = fd.readlines()
+						fd.close()
+				except:
+						raise InputError("Opening file", 1)
 
 
 	def file_lines(self, delimiter=' '):
@@ -98,10 +95,10 @@ class Read(object):
 
 		try:
 			self.temp_data = [int(x) for x in self.data.split()]
+			return self.temp_data
 		except ValueError:
 			print(ReadError("int").message())
 		
-		return self.temp_data
 
 
 
@@ -112,10 +109,11 @@ class Read(object):
 
 		try:
 			self.temp_data = [float(x) for x in self.data.split()]
+			return self.temp_data
+
 		except ValueError:
 			print(ReadError("float").message())
 
-		return self.temp_data
 		
 
 	def complex(self):
@@ -124,10 +122,10 @@ class Read(object):
 
 		try:
 			self.temp_data = [complex(x) for x in self.data.split()]
+			return self.temp_data
 		except ValueError:
 			print(ReadError("complex").message())
 
-		return self.temp_data
 
 	
 	def nums(self):
@@ -135,10 +133,10 @@ class Read(object):
 		''' reads all 3 kinds of numbers and returns them as a list '''
 		try:
 			self.temp_data = [getnum(x) for x in self.data.split()] #getnum(x) returns either an int, a float, or a complex number
+			return self.temp_data
 		except ValueError:
 			print(ReadError("any type").message())
 
-		return self.temp_data
 
 
 
