@@ -34,7 +34,7 @@ class FastaReader(object):
         
         # group data by 2
         for (label, dt) in zip(content, content):
-            self.data[label.replace('>', '')] = dt.replace('\n', '')
+            self.data[label.replace('>', '')] = dt.replace('\n', '').replace('>', '')
 
         self.fmt = fmt
 
