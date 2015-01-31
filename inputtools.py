@@ -54,6 +54,12 @@ class InputError(Exception):
 	def __str__(self):
 		return self.message()
 
+
+class FastaReader(object):
+
+        
+
+
 class Read(object):
 
 	''' custom class for effectively reading numeric types from the standard input '''
