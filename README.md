@@ -10,8 +10,8 @@ platform on bioinformatics.
 
 Classes so far:
 	
-	- FastaReader: a class that implements efficient reading of files in FASTA format.
-					   It also offers data label validation.
+* `FastaReader()`: a class that implements efficient reading of files in FASTA format.
+			   It also offers data label validation.
 
 
 
