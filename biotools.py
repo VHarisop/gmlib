@@ -5,6 +5,17 @@ from operator import mul
 from collections import defaultdict
 from functools import reduce
 
+
+def edit_distance(seq_a, seq_b):
+
+    if not seq_a: return len(seq_b)
+    if not seq_b: return len(seq_a)
+    
+    return edit_distance(seq_a[:-1], seq_b[:-1]) if seq_a[-1] == seq_b[-1] else 1 + min(
+                edit_distance(seq_a[:-1], seq_b), 
+                edit_distance(seq_a, seq_b[:-1]))
+
+
 class TypeException(Exception):
 
     ''' TypeException is raised when passing something
@@ -146,5 +157,6 @@ class FastaReader(object):
 
         # check that all labels match fully with the given format
         return all(re.fullmatch(fmt, lbl) for lbl in self.data)
+
 
 
