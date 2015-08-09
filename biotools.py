@@ -72,9 +72,11 @@ class CodonTable(object):
 
         # replace appropriate symbols depending on genetic type
         if type == 'RNA':
-            self.codon_table = {k: set(v.replace(' ', '').split(',')) for k, v in self.rna_codon_table.items()}
+            self.codon_table = {k: set(v.replace(' ', '').split(',')) 
+                                for k, v in self.rna_codon_table.items()}
         elif type == 'DNA':
-            self.codon_table = {k: set(v.replace(' ', '').replace('U', 'T').split(',')) for k, v in self.rna_codon_table.items()}
+            self.codon_table = {k: set(v.replace(' ', '').replace('U', 'T').split(',')) 
+                                for k, v in self.rna_codon_table.items()}
         else:
             raise TypeException
 
