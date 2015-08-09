@@ -13,7 +13,7 @@ Classes so far:
 * `FastaReader()`: a class that implements efficient reading of files in FASTA format.
 			   It also offers data label validation.
 
-
+* `CodonTable()`: a class for tasks related to codon production.
 
 
 
