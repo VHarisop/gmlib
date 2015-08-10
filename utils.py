@@ -6,7 +6,7 @@ def multi_remove(list_object, *indices):
 
 # Inspired by: 
 # <so>/497426/deleting-multiple-elements-from-a-list/7016104#7016104
-# where <etc> : stackoverflow.com/questions/
+# where <so> : stackoverflow.com/questions/
 
     ''' Removes objects from list at multiple indices.
         The list is modified in place and the removed 
