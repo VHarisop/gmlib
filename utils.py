@@ -37,3 +37,28 @@ def multi_intersection(*lists):
             - n is the number of lists provided. '''
 
     return set.intersection(*map(set, lists))
+
+
+def run_length_encode(items):
+
+    ''' Encodes items in a list of (element, count) pairs, 
+        otherwise known as run-length encoding. 
+        This method is non-destructive. '''
+
+    enc = [] 
+    items = sorted(list(items))
+    while items:
+        elem = items.pop()        
+
+        # if set is empty, create first element
+        if not enc:
+            enc = [(elem, 1)]
+            continue 
+
+        # if same object, increase count 
+        if elem == enc[-1][0]:
+            enc[-1] = (elem, enc[-1][1] + 1)
+        else:
+            enc.append((elem, 1))
+
+    return enc
